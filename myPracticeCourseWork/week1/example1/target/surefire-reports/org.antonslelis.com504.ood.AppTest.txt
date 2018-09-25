@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: org.antonslelis.com504.ood.AppTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.211 s - in org.antonslelis.com504.ood.AppTest
