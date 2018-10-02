@@ -6,7 +6,7 @@
 package org.solent.com504.factoryandfacade.model;
 
 import java.util.List;
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 /**
  *
@@ -14,7 +14,7 @@ import java.util.LinkedList;
  */
 public class FarmFacadeImpl implements FarmFacade{
     
-    private List<Animal> animalList =  new LinkedList<Animal>();
+    private List<Animal> animalList =  new ArrayList<Animal>();
     
     public List<Animal> getAllAnimals() {
         return animalList;
