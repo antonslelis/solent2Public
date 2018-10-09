@@ -28,16 +28,15 @@ public class VNWCvvAlgorythimStrategy implements CvvAlgorythimStrategy {
         for (String dig: cardNumArr) {
             sum=sum+Integer.parseInt(dig);
         }
+        
         //Name calculations
         String name=card.getName();
-        for (int i = 0; i < s.length(); ++i) {
-            char ch = s.charAt(i);
-            if (!t.isEmpty()) {
-                t += " ";
-            }
-            int n = (int)ch - (int)'a' + 1;
-            t += String.valueOf(n);
+        name=name.replace(" ", "");
+        for (int i = 0; i < name.length(); ++i) {
+            char ch = name.charAt(i);
+            sum =sum+(int)ch;
         }
+        
         //Results
         String cvvRes="000";
         if(sum>999){
