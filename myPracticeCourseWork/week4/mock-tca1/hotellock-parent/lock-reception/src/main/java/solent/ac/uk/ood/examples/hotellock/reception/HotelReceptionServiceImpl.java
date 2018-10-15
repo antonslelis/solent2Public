@@ -4,33 +4,48 @@
  * and open the template in the editor.
  */
 package solent.ac.uk.ood.examples.hotellock.reception;
-
 import java.util.Date;
 import solent.ac.uk.ood.examples.hotellock.model.CardKey;
 import solent.ac.uk.ood.examples.hotellock.model.HotelReceptionService;
 import solent.ac.uk.ood.examples.hotellock.model.SecretKeyProvider;
+import solent.ac.uk.ood.examples.hotellock.secretkey.SecretKeyProviderImpl;
+
+
 
 /**
  *
- * @author cgallen
+ * @author 3lelia74
  */
 public class HotelReceptionServiceImpl implements HotelReceptionService {
-
-    private SecretKeyProvider secretKeyProvider;
-    
+    static int issNum=0;
     @Override
+    
     public String createCardCode(String roomNumber, Date startDate, Date endDate) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String cardCode= new String();
+        CardKey card=new CardKey();
+        SecretKeyProviderImpl skp=new SecretKeyProviderImpl();
+        issNum+=1;
+        
+        card.setStartDate(startDate);
+        card.setEndDate(endDate);
+        card.setRoomNumber(roomNumber);
+        card.setIssueNumber(issNum);
+        cardCode=skp.encodeCard(card);
+        return cardCode;
     }
 
     @Override
     public CardKey readCard(String cardCode) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        CardKey card=new CardKey();
+        SecretKeyProviderImpl skp=new SecretKeyProviderImpl();
+        
+        card=skp.decodeCard(cardCode);
+        return card;
     }
 
     @Override
     public void setSecretKeyProvider(SecretKeyProvider secretKeyProvider) {
-        this.secretKeyProvider= secretKeyProvider;
+        
     }
     
 }
