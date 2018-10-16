@@ -18,12 +18,13 @@ import solent.ac.uk.ood.examples.hotellock.secretkey.SecretKeyProviderImpl;
  */
 public class HotelReceptionServiceImpl implements HotelReceptionService {
     static int issNum=0;
+    private SecretKeyProvider skp;
     @Override
     
     public String createCardCode(String roomNumber, Date startDate, Date endDate) {
+        setSecretKeyProvider(new SecretKeyProviderImpl());
         String cardCode= new String();
         CardKey card=new CardKey();
-        SecretKeyProviderImpl skp=new SecretKeyProviderImpl();
         issNum+=1;
         
         card.setStartDate(startDate);
@@ -37,15 +38,15 @@ public class HotelReceptionServiceImpl implements HotelReceptionService {
     @Override
     public CardKey readCard(String cardCode) {
         CardKey card=new CardKey();
-        SecretKeyProviderImpl skp=new SecretKeyProviderImpl();
-        
+        setSecretKeyProvider(new SecretKeyProviderImpl());
+               
         card=skp.decodeCard(cardCode);
         return card;
     }
 
     @Override
     public void setSecretKeyProvider(SecretKeyProvider secretKeyProvider) {
-        
+        skp=secretKeyProvider;
     }
     
 }

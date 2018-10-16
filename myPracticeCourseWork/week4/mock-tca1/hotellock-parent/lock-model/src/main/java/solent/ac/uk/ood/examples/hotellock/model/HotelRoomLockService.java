@@ -6,5 +6,5 @@ public interface HotelRoomLockService {
 
     public void setSecretKeyProvider(SecretKeyProvider secretKeyProvider);
 
-    public String setRoomNumber(String roomNumber);
+    public void setRoomNumber(String roomNumber);
 }
