@@ -9,6 +9,8 @@ import solent.ac.uk.ood.examples.hotellock.model.HotelRoomLockService;
 import solent.ac.uk.ood.examples.hotellock.model.SecretKeyProvider;
 import solent.ac.uk.ood.examples.hotellock.secretkey.SecretKeyProviderImpl;
 import java.util.Date;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  *
@@ -17,12 +19,15 @@ import java.util.Date;
 public class HotelRoomLockServiceImpl implements HotelRoomLockService{
     private SecretKeyProvider skp;
     private String roomNum;
+    public static final Logger LOG = LogManager.getLogger(HotelRoomLockServiceImpl.class);
+    public static String WILDCARD_ROOM_NUMBER = "*";
+    public static final Logger TRANSACTIONLOG = LogManager.getLogger("transaction-log");
     @Override
     public String unlockDoor(String cardCode) {
         CardKey card=new CardKey();
         setSecretKeyProvider(new SecretKeyProviderImpl());
         Date currentDate=new Date();
-        if((card.getRoomNumber().equals(roomNum))||(card.getRoomNumber().equals("*"))){
+        if((card.getRoomNumber().equals(roomNum))||(card.getRoomNumber().equals(WILDCARD_ROOM_NUMBER))){
             if((currentDate.after(card.getStartDate())|| (currentDate.equals(card.getStartDate()))) ){
                 if((currentDate.before(card.getEndDate())|| (currentDate.equals(card.getEndDate()))) ){
                     return("Door opened");
