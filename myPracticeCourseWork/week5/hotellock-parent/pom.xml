@@ -20,7 +20,6 @@
         <module>lock-secretkey</module>
         <module>lock-reception</module>
         <module>lock-roomlock</module>
-        <module>lock-web</module>
     </modules>
     
     <dependencyManagement>

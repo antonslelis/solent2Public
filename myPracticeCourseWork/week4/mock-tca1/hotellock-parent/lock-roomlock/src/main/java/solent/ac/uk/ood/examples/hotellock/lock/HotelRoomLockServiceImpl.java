@@ -23,18 +23,19 @@ public class HotelRoomLockServiceImpl implements HotelRoomLockService{
     public static String WILDCARD_ROOM_NUMBER = "*";
     public static final Logger TRANSACTIONLOG = LogManager.getLogger("transaction-log");
     @Override
-    public String unlockDoor(String cardCode) {
+    public boolean unlockDoor(String cardCode) {
         CardKey card=new CardKey();
         setSecretKeyProvider(new SecretKeyProviderImpl());
         Date currentDate=new Date();
         if((card.getRoomNumber().equals(roomNum))||(card.getRoomNumber().equals(WILDCARD_ROOM_NUMBER))){
             if((currentDate.after(card.getStartDate())|| (currentDate.equals(card.getStartDate()))) ){
                 if((currentDate.before(card.getEndDate())|| (currentDate.equals(card.getEndDate()))) ){
-                    return("Door opened");
+                    return(true);
+                    TRANSACTIONLOG.debug("Door "+roomNum+" unlocked with key:");
                 }
             }
         }
-        return("Door closed");
+        return(false);
     }
 
     @Override

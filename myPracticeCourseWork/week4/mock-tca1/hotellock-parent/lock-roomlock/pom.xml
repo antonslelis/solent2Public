@@ -31,6 +31,12 @@
         </dependency>
         
         <dependency>
+            <groupId>solent.ac.uk.ood.examples</groupId>
+            <artifactId>lock-reception</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        
+        <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
             <scope>compile</scope>
