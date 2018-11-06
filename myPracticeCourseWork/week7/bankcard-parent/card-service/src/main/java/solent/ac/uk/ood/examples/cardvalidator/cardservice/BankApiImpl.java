@@ -35,32 +35,58 @@ public class BankApiImpl implements BankApi {
 
     @Override
     public Account createAccount(String issuerIdentificationNumber, String name) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Account newAcc=accountDAO.createAccount(issuerIdentificationNumber,name);
+        LOG.debug("New account: "+newAcc);
+        return newAcc;
     }
 
     @Override
     public boolean deleteAccount(String issuerIdentificationNumber, String individualAccountIdentifier) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean delAccRes=accountDAO.deleteAccount(issuerIdentificationNumber, individualAccountIdentifier);
+        if(delAccRes){
+            LOG.debug("The account "+individualAccountIdentifier+" from the bank "+issuerIdentificationNumber+" has been deleted");
+        }else{
+            LOG.debug("The account with ids("+issuerIdentificationNumber+" and "+individualAccountIdentifier+") doesn't exist");
+        }
+        return delAccRes;
     }
 
     @Override
     public Account retrieveAccount(String issuerIdentificationNumber, String individualAccountIdentifier) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Account newAcc=accountDAO.retrieveAccount(issuerIdentificationNumber, individualAccountIdentifier);
+        if(newAcc==null){
+            LOG.debug("The account with ids("+issuerIdentificationNumber+" and "+individualAccountIdentifier+") doesn't exist");
+        }else{
+            LOG.debug("Account: "+newAcc);
+        }
+        return newAcc;
     }
 
     @Override
     public Account updateAccount(Account account) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Account newAcc=accountDAO.updateAccount(account);
+        if(newAcc==null){
+            LOG.debug("Nothing has been updated");
+        }else{
+            LOG.debug("The account has been updated. New account: "+newAcc);
+        }
+        return newAcc;
     }
 
     @Override
     public List<Account> getAccountsForIssuer(String issuerIdentificationNumber) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       List<Account> newAccList=accountDAO.getAccountsForIssuer(issuerIdentificationNumber);
+       if(newAccList==null){
+           LOG.debug("Accounts with issuer identification number "+issuerIdentificationNumber+" don't exist");
+       }else{
+           LOG.debug("Retrived list of accounts: "+newAccList);
+       }
+       return newAccList;
     }
 
     @Override
     public List<String> getSupportedIssuerNames() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return null;
     }
 
     @Override
