@@ -13,6 +13,8 @@ import solent.ac.uk.ood.examples.cardvalidator.model.AccountDAO;
 import solent.ac.uk.ood.examples.cardvalidator.model.BankApi;
 import solent.ac.uk.ood.examples.cardvalidator.model.CardFactoryDAO;
 import solent.ac.uk.ood.examples.cardvalidator.model.CreditCard;
+import solent.ac.uk.ood.examples.cardvalidator.model.CreditCardFactoryAndValidator;
+
 
 /**
  *
@@ -35,73 +37,50 @@ public class BankApiImpl implements BankApi {
 
     @Override
     public Account createAccount(String issuerIdentificationNumber, String name) {
-        Account newAcc=accountDAO.createAccount(issuerIdentificationNumber,name);
-        LOG.debug("New account: "+newAcc);
-        return newAcc;
+        return accountDAO.createAccount(issuerIdentificationNumber, name);
     }
 
     @Override
     public boolean deleteAccount(String issuerIdentificationNumber, String individualAccountIdentifier) {
-        boolean delAccRes=accountDAO.deleteAccount(issuerIdentificationNumber, individualAccountIdentifier);
-        if(delAccRes){
-            LOG.debug("The account "+individualAccountIdentifier+" from the bank "+issuerIdentificationNumber+" has been deleted");
-        }else{
-            LOG.debug("The account with ids("+issuerIdentificationNumber+" and "+individualAccountIdentifier+") doesn't exist");
-        }
-        return delAccRes;
+        return accountDAO.deleteAccount(issuerIdentificationNumber, individualAccountIdentifier); 
     }
 
     @Override
     public Account retrieveAccount(String issuerIdentificationNumber, String individualAccountIdentifier) {
-        Account newAcc=accountDAO.retrieveAccount(issuerIdentificationNumber, individualAccountIdentifier);
-        if(newAcc==null){
-            LOG.debug("The account with ids("+issuerIdentificationNumber+" and "+individualAccountIdentifier+") doesn't exist");
-        }else{
-            LOG.debug("Account: "+newAcc);
-        }
-        return newAcc;
+        return accountDAO.retrieveAccount(issuerIdentificationNumber, individualAccountIdentifier); 
     }
 
     @Override
     public Account updateAccount(Account account) {
-        Account newAcc=accountDAO.updateAccount(account);
-        if(newAcc==null){
-            LOG.debug("Nothing has been updated");
-        }else{
-            LOG.debug("The account has been updated. New account: "+newAcc);
-        }
-        return newAcc;
+        return accountDAO.updateAccount(account);
     }
 
     @Override
     public List<Account> getAccountsForIssuer(String issuerIdentificationNumber) {
-       List<Account> newAccList=accountDAO.getAccountsForIssuer(issuerIdentificationNumber);
-       if(newAccList==null){
-           LOG.debug("Accounts with issuer identification number "+issuerIdentificationNumber+" don't exist");
-       }else{
-           LOG.debug("Retrived list of accounts: "+newAccList);
-       }
-       return newAccList;
+        return accountDAO.getAccountsForIssuer(issuerIdentificationNumber); 
     }
 
     @Override
     public List<String> getSupportedIssuerNames() {
-        return cardFactoryDao.getSupportedIssuerNames();
+        return cardFactoryDao.getSupportedIssuerNames(); 
     }
 
     @Override
     public String getIssuerIdentifierNumberForName(String name) {
-        return cardFactoryDao.getIssuerIdentifierNumberForName(name);
+        return cardFactoryDao.getIssuerIdentifierNumberForName(name); 
     }
 
     @Override
     public String getNameForIssuerIdentificationNumber(String issuerIdentificationNumber) {
-        return cardFactoryDao.getNameForIssuerIdentificationNumber(issuerIdentificationNumber);
+        return cardFactoryDao.getNameForIssuerIdentificationNumber(issuerIdentificationNumber); 
     }
 
     @Override
     public CreditCard createNewCreditCard(Account account) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String issNum=account.getIssuerIdentificationNumber();
+        CreditCardFactoryAndValidator ccfv=cardFactoryDao.getCreditCardFactoryAndValidator(issNum);
+        account.setCurrentCardIssueNumber(account.getCurrentCardIssueNumber()+1);
+        return ccfv.createCreditCard(account.getIndividualAccountIdentifier(), account.getName(), "1121", issNum);
     }
 
 }
